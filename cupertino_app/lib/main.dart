@@ -1,3 +1,4 @@
+
 import 'package:cupertino_app/product_list_tab.dart';
 import 'package:cupertino_app/search_tab.dart';
 import 'package:cupertino_app/shopping_cart_tab.dart';
@@ -14,7 +15,12 @@ void main() {
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
   );
-  return runApp(CupertinoStoreApp()); 
+  return runApp(
+    ChangeNotifierProvider<AppStateModel>(
+      builder: (context) => AppStateModel(),
+      child: CupertinoStoreApp(),
+    )
+  ); 
 }
 
 class CupertinoStoreApp extends StatelessWidget {
@@ -47,26 +53,32 @@ class CupertinoStoreHomePage extends StatelessWidget {
         ],
       ),
       tabBuilder: (context, index) {
+        CupertinoTabView returnValue;
         switch(index) {
           case 0: 
-            return CupertinoTabView(builder: (context) {
+            
+            returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
                 child: ProductListTab(),
               );
             });
+            break;
           case 1: 
-            return CupertinoTabView(builder: (context) {
+            returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
                 child: SearchTab(),
               );
             });
+            break;
           case 2: 
-            return CupertinoTabView(builder: (context) {
+            returnValue = CupertinoTabView(builder: (context) {
               return CupertinoPageScaffold(
                 child: ShoppingCartTab(),
               );
             });
+            break;
         }
+        return returnValue;
       },
     );
   }

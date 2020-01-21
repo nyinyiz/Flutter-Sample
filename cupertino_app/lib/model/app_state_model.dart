@@ -123,6 +123,10 @@ class AppStateModel extends foundation.ChangeNotifier {
     notifyListeners();
   }
 
+  List<Product> loadProductList() {
+    return ProductsRepository.loadProducts(Category.all);
+  }
+
   void setCategory(Category newCategory) {
     _selectedCategory = newCategory;
     notifyListeners();
