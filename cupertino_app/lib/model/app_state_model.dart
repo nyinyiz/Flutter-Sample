@@ -36,7 +36,7 @@ class AppStateModel extends foundation.ChangeNotifier {
   double get subtotalCost {
     return _productsInCart.keys.map((id) {
       // Extended price for product line
-      return _availableProducts[id].price * _productsInCart[id];
+      return loadProductList()[id].price * _productsInCart[id];
     }).fold(0, (accumulator, extendedPrice) {
       return accumulator + extendedPrice;
     });
@@ -77,7 +77,7 @@ class AppStateModel extends foundation.ChangeNotifier {
 
   // Search the product catalog
   List<Product> search(String searchTerms) {
-    return getProducts().where((product) {
+    return loadProductList().where((product) {
       return product.name.toLowerCase().contains(searchTerms.toLowerCase());
     }).toList();
   }
@@ -108,7 +108,7 @@ class AppStateModel extends foundation.ChangeNotifier {
 
   // Returns the Product instance matching the provided id.
   Product getProductById(int id) {
-    return _availableProducts.firstWhere((p) => p.id == id);
+    return loadProductList().firstWhere((p) => p.id == id);
   }
 
   // Removes everything from the cart.
